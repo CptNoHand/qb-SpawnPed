@@ -32,17 +32,20 @@ function pedCreation(PedToCreate)
 
 end
 
-Citizen.CreateThread(function()
-  while true do
-    Citizen.Wait(0)
-		if (not generalLoaded) then
-			if NetworkIsHost() then
-				for i=1,#NPC ,1 do
-					pedCreation(NPC[i])
-					Citizen.Wait(10)
+RegisterNetEvent("qb-SpawnPed:client:Spawn")
+AddEventHandler("qb-SpawnPed:client:Spawn", function(NPC)
+	Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(0)
+			if (not generalLoaded) then
+				if NetworkIsHost() then
+					for i=1,#NPC ,1 do
+						pedCreation(NPC[i])
+						Citizen.Wait(10)
+					end
 				end
+				generalLoaded = true
 			end
-			generalLoaded = true
-		end
-  end
-end)
+	end
+	end)
+)
