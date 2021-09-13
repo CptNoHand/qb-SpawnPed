@@ -10,7 +10,7 @@ end
 function pedCreation(PedToCreate)
 
 		setupModel(GetHashKey(PedToCreate.modelHash))
-		pedCreated = CreatePed(4, PedToCreate.modelHash, PedToCreate.x, PedToCreate.y, PedToCreate.z, PedToCreate.heading, false, false)
+		pedCreated = CreatePed(4, PedToCreate.modelHash, PedToCreate.x, PedToCreate.y, PedToCreate.z -1, PedToCreate.rotation, false, false)
 		SetEntityAsMissionEntity(pedCreated, true, true)
 		--SetPedShootRate(pedCreated,  1000)
 		--AddArmourToPed(pedCreated, 100)
@@ -34,6 +34,7 @@ end
 
 RegisterNetEvent("qb-SpawnPed:client:Spawn")
 AddEventHandler("qb-SpawnPed:client:Spawn", function(NPC)
+	print(NPC.heading)
 	Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
@@ -48,4 +49,4 @@ AddEventHandler("qb-SpawnPed:client:Spawn", function(NPC)
 			end
 	end
 	end)
-)
+end)
