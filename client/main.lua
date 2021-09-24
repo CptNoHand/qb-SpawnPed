@@ -12,13 +12,14 @@ function pedCreation_basic(PedToCreate)
 		setupModel(GetHashKey(PedToCreate.modelHash))
 		pedCreated = CreatePed(4, PedToCreate.modelHash, PedToCreate.x, PedToCreate.y, PedToCreate.z -1, PedToCreate.rotation, false, false)
 		SetEntityAsMissionEntity(pedCreated, true, true)
+		--FreezeEntityPosition(PedToCreate, true)
 		--SetPedShootRate(pedCreated,  1000)
 		--AddArmourToPed(pedCreated, 100)
 		--SetPedAlertness(pedCreated, 0)
 		--SetPedAccuracy(pedCreated, 100)
 		--SetPedCanSwitchWeapon(pedCreated, true)
 		--SetEntityHealth(pedCreated,  200)
-		SetPedFleeAttributes(pedCreated, 0, 0)
+		--SetPedFleeAttributes(pedCreated, 0, 0)
 		--SetPedCombatAttributes(pedCreated, 46, true)
 		--SetPedCombatAbility(pedCreated,  2)
 		--SetPedCombatMovement(pedCreated,  0)
@@ -75,7 +76,7 @@ function pedCreation_armed(PedToCreate)
 		--SetPedPathCanDropFromHeight(inputPed, 1)
 		SetPedPathPreferToAvoidWater(inputPed, 1)
 		--SetEntityInvincible(pedCreated, true)
-		GiveWeaponToPed(pedCreated, GetHashKey("weapon_sawnoffshotgun"), 5000, false, false)
+		GiveWeaponToPed(pedCreated, GetHashKey(PedToCreate.weapon), 5000, false, false)
 
 end
 
@@ -88,6 +89,7 @@ AddEventHandler("qb-SpawnPed:client:Spawn_Armed", function(NPC)
 			if (not generalLoaded) then
 				if NetworkIsHost() then
 					for i=1,#NPC ,1 do
+						AddRelationshipGroup(NPC[i].teams, GetHashKey(NPC[i].teams))
 						pedCreation_armed(NPC[i])
 						Citizen.Wait(10)
 					end
